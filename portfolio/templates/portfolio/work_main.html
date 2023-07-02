@@ -1,0 +1,55 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+
+<section class="work__main">
+    <div class="container">
+        <div class="contact__text">
+            <h2>{{ order_works.title }}</h2>
+        </div>
+
+        <div class="work__main__style">
+            <div class="slider__main">
+                <div class="slider">
+                    <div class="slider-line">
+                        <img src="{{ order_works.image_1.url }}" alt="" class="image-work-main">
+                        {% if order_works.image_2 %}
+                        <img src="{{ order_works.image_2.url }}" alt="" class="image-work-main">
+                        {% else %}
+                        <span></span>
+                        {% endif %}
+                        {% if order_works.image_3 %}
+                        <img src="{{ order_works.image_3.url }}" alt="" class="image-work-main">
+                        {% else %}
+                        <span></span>
+                        {% endif %}
+                    </div>
+                </div>
+                <button class="slider-prev">&lt; Пред</button>
+                <button class="slider-next">След &gt;</button>
+            </div>
+            <div class="work__context">
+                <p>Цена: {{ order_works.price }} &#8381</p>
+                <p>Материал изделия: {{ order_works.material }}</p>
+            </div>
+        </div>
+
+        <div class="description">
+            <p class="header__description">ОПИСАНИЕ</p>
+            <p>{{ order_works.description }}</p>
+        </div>
+
+        <div class="order login">
+            <h2>Оставить заявку</h2>
+            <form method="POST" class="work_form">
+                {% csrf_token %}
+                <div>
+                    {{ form.as_p }}
+                </div>
+                <button class="login__btn" type="submit" onclick="history.back()">Оставить заявку</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

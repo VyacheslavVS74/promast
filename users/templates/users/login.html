@@ -1,0 +1,40 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+
+{% if page == 'register' %}
+<section class="login">
+    <div class="container">
+        <form action="{% url 'register' %}" method="post" class="bg">
+            <h2>Регистрация</h2>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="login__btn">Зарегистрироваться</button>
+            <p>Если есть аккаунт: <a href="{% url 'login' %}">Авторизация</a></p>
+        </form>
+    </div>
+</section>
+{% else %}
+<section class="login">
+    <div class="container">
+        <form action="{% url 'login' %}" method="post" class="bg">
+            {% csrf_token %}
+            <h2>Авторизация</h2>
+            <div>
+                <label>Логин</label>
+                <input class="form-input" type="text" name="username" placeholder="Введите имя">
+            </div>
+            <div>
+                <label>Пароль</label>
+                <input class="form-input" type="password" name="password" placeholder="Введите пароль">
+            </div>
+            <button class="login__btn">Авторизация</button>
+            <p>Нет аккаунта?</p>
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </form>
+    </div>
+</section>
+{% endif %}
+
+
+{% endblock %}

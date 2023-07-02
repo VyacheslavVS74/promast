@@ -1,0 +1,59 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="post">
+    <div class="container">
+        <div class="post__center">
+            <a href="{% url 'blog' %}">Категория: {{ post.cat }}</a>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content|safe }}</p>
+            <h4>{{ post.time_created }}</h4>
+            <p class="back"><a href="#" onclick="history.back()"><img src="{% static 'blog/back.png' %}" alt=""></a></p>
+        </div>
+    </div>
+</div>
+
+<div class="comments">
+    <div class="container">
+        <h3>Оставить Отзыв</h3>
+
+        {% if request.user.id in post.reviewers %}
+        <p>Вы уже оставляли комментарий об этой статье</p>
+
+        {% elif request.user.is_authenticated %}
+        <form action="{% url 'post' post.slug %}" method="post" class="form__comments">
+            {% csrf_token %}
+            <div class="field__comments">
+            {% for field in form %}
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Отправить" class="login__btn">
+        </form>
+
+        {% else %}
+        <a href="{% url 'login' %}">Пожалуйста, войдите, чтобы оставить отзыв</a>
+        {% endif %}
+
+
+        <div class="comment__list">
+            <h3>Комментарии:</h3>
+            {% for review in post.review_set.all %}
+            <div class="comment">
+                <h3>Автор: {{ review.owner }}</h3>
+                <p class="comment__info">
+                    {{ review.text|linebreaksbr }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

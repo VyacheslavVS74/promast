@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProMast</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" href="{% static 'portfolio/favicon.ico' %}" type="image/x-icon" />
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="container">
+            <div class="header__row">
+                <a href="{% url 'home' %}" class="header__logo"><img src="{% static 'portfolio/logo.png' %}" alt=""></a>
+                <div class="header__menu menu">
+                    <div class="menu__icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <nav class="menu__body">
+                        <ul class="menu__list">
+                            <li><a href="{% url 'home' %}" class="menu__link">Главная</a></li>
+                            <li><a href="{% url 'catalog' %}" class="menu__link">Наши проекты</a></li>
+                            <li><a href="{% url 'about' %}" class="menu__link">О нас</a></li>
+                            <li><a href="{% url 'blog' %}" class="menu__link">Блог</a></li>
+                            <li><a href="{% url 'contact' %}" class="menu__link">Контакты</a></li>
+                            {% if user.is_authenticated %}
+                            <li style="color:#fff; font-size: 18px">{{ user.username }} | <a href="{% url 'logout' %}" class="menu__link">Выйти</a></li>
+                            {% else %}
+                            <li><a href="{% url 'login' %}" class="menu__link">Войти</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="header__name">
+                <div class="title">
+                    <h1 class="name">ProMast</h1>
+                    <p class="name_description">Мастерская по изготовлению изделий и принадлежностей для дома и офиса из дерева</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="content">
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    <div class="alert alert--{{message.tags}}"></div>
+                    <p class="alert__message">{{ message }}</p>
+                    <button class="alert__close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+
+        {% include 'blog/pagination.html' with queryset=posts custom_range=custom_range %}
+    </section>
+
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="https://goo.gl/maps/aMK4GsuZt7yASWKn7" class="map-marker" target="_blank">Челябинск, ул. Коммуны, 143</a>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        <a href="#" class="messenger"><i class="fa-brands fa-vk"></i></a>
+                        <a href="#" class="messenger"><i class="fa-brands fa-telegram"></i></a>
+                        <a href="#" class="messenger"><i class="fa-brands fa-instagram"></i></a>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <a href="tel:+79999999999" class="mobile">+7 (999) 999-99-99</a>
+                </div>
+            </div>
+        </div>
+</section>
+</div>
+
+<script src="https://kit.fontawesome.com/0787968c82.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

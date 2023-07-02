@@ -1,0 +1,63 @@
+{% if posts.has_other_pages %}
+<div class="paginator">
+  <div class="container">
+    <div class="center">
+      <ul class="pagination">
+
+        {% if queryset.has_previous %}
+        <li><a href="?page={{queryset.previous_page_number}}" class="btn2 page-link"
+               data-page="{{queryset.previous_page_number}}">&lt; Пред</a></li>
+        {% endif %}
+
+        {% for page in custom_range %}
+        {% if page == queryset.number %}
+          <li><a href="?page={{page}}" class="btn2 btn--sub">{{ page }}</a></li>
+        {% else %}
+          <li><a href="?page={{page}}" class="btn2">{{ page }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if queryset.has_next %}
+        <li><a href="?page={{queryset.next_page_number}}" class="btn2 page-link"
+               data-page="{{queryset.next_page_number}}">След &gt;</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+<!--{% if page_obj.has_other_pages %}-->
+<!--<div class="paginator">-->
+<!--    <div class="container">-->
+<!--        <div class="center">-->
+<!--            <ul class="pagination">-->
+
+<!--                {% if page_obj.has_previous %}-->
+<!--                <li class="page_num">-->
+<!--                    <a href="?page={{ page_obj.previous_page_number }}" class="btn2">&lt;</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+
+<!--                {% for p in paginator.page_range %}-->
+<!--                {% if page_obj.number == p %}-->
+<!--                <li class="btn2 btn&#45;&#45;sub" >{{ p }}</li>-->
+<!--                {% else %}-->
+<!--                <li class="page-num">-->
+<!--                    <a href="?page={{ p }}" class="btn2">{{ p }}</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+<!--                {% endfor %}-->
+
+<!--                {% if page_obj.has_next %}-->
+<!--                <li>-->
+<!--                    <a href="?page={{ page_obj.next_page_number }}" class="btn2">&gt;</a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% endif %}-->

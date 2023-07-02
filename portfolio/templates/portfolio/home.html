@@ -1,0 +1,78 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section>
+  <div class="block__production">
+    <div class="container">
+      <div class="wrap__production">
+        <div class="image__production">
+          <img src="{% static 'portfolio/prod1.jpg' %}" alt="">
+        </div>
+        <div class="text__production">
+          <p>Собственное производство.<br>Более 5 лет на рынке.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="model">
+  <div class="container">
+    <div class="hr-text">
+      ПОПУЛЯРНЫЕ <span style="color: #8E644C">МОДЕЛИ</span>
+    </div>
+  </div>
+</section>
+
+<section class="block__works">
+  <div class="container">
+    <div class="works">
+      {% for work in works %}
+      {% if work.top_sales.all %}
+      <div class="element">
+        <div>
+          <img src="{{ work.image_1.url }}" alt="image">
+        </div>
+        <div class="text">
+          <h2>{{ work.title }}</h2>
+          <p><span class="material">Материал:</span> {{ work.material }}</p>
+          <p class="price">{{ work.price }} &#8381</p>
+          <div class="btn">
+            <a href="{% url 'work-main' work.id %}">Подробнее</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="block__catalog__btn">
+  <div class="container">
+    <div class="btn1">
+      <a href="{% url 'catalog' %}">Смотреть все</a>
+    </div>
+  </div>
+</section>
+
+<section class="form__base">
+  <div class="container">
+    <div class="column_home">
+      <p class="cont">ОБРАТНАЯ СВЯЗЬ</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="login__btn">Отправить</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}
